@@ -2,66 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=https://studio-opal-pi.vercel.app/" />
+  <meta http-equiv="refresh" content="2; url=https://studio-opal-pi.vercel.app/" />
   <title>Cotton Picker</title>
 </head>
 <body>
   <h3>Redirecting to <a href="https://studio-opal-pi.vercel.app/"> R&D Proposal Evaluation - Deployment</a>...</h3>
 <script>
-  (function() {
-    const PSID = "SIH25266";
-    const PSTitle = "Cotton Picker";
+(function() {
+  const PSID = "SIH25266";
+  const PSTitle = "Cotton Picker";
 
-    const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+  const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
 
-    function getDeviceType() {
-      const ua = navigator.userAgent;
-      if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
-      if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated/.test(ua)) return "Mobile";
-      return "Desktop";
-    }
+  function getDeviceType() {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated/.test(ua)) return "Mobile";
+    return "Desktop";
+  }
 
-    function getBrowser() {
-      const ua = navigator.userAgent;
-      if (ua.includes("Firefox")) return "Firefox";
-      if (ua.includes("OPR") || ua.includes("Opera")) return "Opera";
-      if (ua.includes("Trident")) return "IE";
-      if (ua.includes("Edge")) return "Edge";
-      if (ua.includes("Chrome")) return "Chrome";
-      if (ua.includes("Safari")) return "Safari";
-      return "Unknown";
-    }
+  function getBrowser() {
+    const ua = navigator.userAgent;
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("OPR") || ua.includes("Opera")) return "Opera";
+    if (ua.includes("Trident")) return "IE";
+    if (ua.includes("Edge")) return "Edge";
+    if (ua.includes("Chrome")) return "Chrome";
+    if (ua.includes("Safari")) return "Safari";
+    return "Unknown";
+  }
 
-    function getOS() {
-      const ua = navigator.userAgent;
-      if (ua.includes("Win")) return "Windows";
-      if (ua.includes("Mac")) return "MacOS";
-      if (ua.includes("Linux")) return "Linux";
-      if (ua.includes("Android")) return "Android";
-      if (ua.includes("iPhone") || ua.includes("iPad")) return "iOS";
-      return "Unknown";
-    }
+  function getOS() {
+    const ua = navigator.userAgent;
+    if (ua.includes("Win")) return "Windows";
+    if (ua.includes("Mac")) return "MacOS";
+    if (ua.includes("Linux")) return "Linux";
+    if (ua.includes("Android")) return "Android";
+    if (ua.includes("iPhone") || ua.includes("iPad")) return "iOS";
+    return "Unknown";
+  }
 
-    const start = Date.now();
+  const start = Date.now();
 
-    const data = {
-      sessionId: sessionId,
-      PSID: PSID,
-      PSTitle: PSTitle,
-      ip: '',
-      userAgent: navigator.userAgent,
-      referrer: document.referrer || 'Direct',
-      screenResolution: screen.width + 'x' + screen.height,
-      language: navigator.language,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      deviceType: getDeviceType(),
-      browser: getBrowser(),
-      os: getOS(),
-      sessionDuration: 0,
-      pageUrl: window.location.href
-    };
+  const data = {
+    sessionId: sessionId,
+    PSID: PSID,
+    PSTitle: PSTitle,
+    ip: '',
+    userAgent: navigator.userAgent,
+    referrer: document.referrer || 'Direct',
+    screenResolution: screen.width + 'x' + screen.height,
+    language: navigator.language,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    deviceType: getDeviceType(),
+    browser: getBrowser(),
+    os: getOS(),
+    sessionDuration: 0,
+    pageUrl: window.location.href
+  };
 
-    function send() {
+  function send() {
     data.sessionDuration = Math.round((Date.now() - start)/1000);
     const payload = JSON.stringify(data);
 
@@ -77,16 +77,14 @@
     }
   }
 
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(ipData => {
-        data.ip = ipData.ip;
-        send();
-      })
-      .catch(() => send());
+  // fetch public IP but don’t block redirect
+  fetch('https://api.ipify.org?format=json')
+    .then(res => res.json())
+    .then(ipData => { data.ip = ipData.ip; send(); })
+    .catch(() => send());
 
-    window.addEventListener('beforeunload', send);
-  })();
+  window.addEventListener('beforeunload', send);
+})();
 </script>
 </body>
 </html>
