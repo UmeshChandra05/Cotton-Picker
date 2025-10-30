@@ -62,13 +62,20 @@
     };
 
     function send() {
-      data.sessionDuration = Math.round((Date.now() - start)/1000);
+    data.sessionDuration = Math.round((Date.now() - start)/1000);
+    const payload = JSON.stringify(data);
+
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('https://umeshchandrapc.app.n8n.cloud/webhook/sih-visit', payload);
+    } else {
+      // fallback for older browsers
       fetch('https://umeshchandrapc.app.n8n.cloud/webhook/sih-visit', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
+        body: payload
       }).catch(console.error);
     }
+  }
 
     fetch('https://api.ipify.org?format=json')
       .then(res => res.json())
